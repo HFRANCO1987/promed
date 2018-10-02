@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<f:facet name="first">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+	</f:facet>
+	<title>PROMED - Loja Virtual</title>
+	<h:outputScript name="js/layout.js" library="ronin-layout" />
+
+	<ui:insert name="head" />
+	
+	<style>
+		.ui-chips-container {
+			width: 100% !important;
+		}
+		span.ui-chips-token-icon{
+			display: none;
+		}
+		
+		ul.ui-state-disabled {
+			opacity:10 !important;
+		}
+	</style>
+</h:head>
+
+<h:body>
+
+	<div id="wrapper">
+		<div id="wrapperIndent">
+
+			<div id="layout-portlets-cover">
+				<div class="Flex">
+					<div class="FlexRow">
+						<div class="FlexCell">
+
+							<ui:insert name="content">
+                            </ui:insert>
+
+							<ui:include src="footer.xhtml" />
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<p:ajaxStatus
+				style="width:32px;height:32px;position:fixed;right:7px;bottom:7px">
+				<f:facet name="start">
+					<p:graphicImage name="images/preloader.gif" library="ronin-layout" />
+				</f:facet>
+
+				<f:facet name="complete">
+					<h:outputText value="" />
+				</f:facet>
+			</p:ajaxStatus>
+		</div>
+	</div>
+
+	<h:outputStylesheet name="css/core-layout.css" library="ronin-layout" />
+	<h:outputStylesheet name="css/font-awesome.css" library="ronin-layout" />
+	<h:outputStylesheet name="css/animate.css" library="ronin-layout" />
+	<h:outputStylesheet name="css/ronin-font.css" library="ronin-layout" />
+	<h:outputStylesheet name="css/ronin-layout#{layoutMenuView.color}.css"
+		library="ronin-layout" />
+	<script
+		src="${facesContext.externalContext.request.contextPath}/assets/js/jquery.inputmask.bundle.min.js"></script>
+	<script
+		src="${facesContext.externalContext.request.contextPath}/assets/js/util.js"></script>
+
+	<script>
+		PrimeFaces.locales['pt'] = {
+			closeText : 'Fechar',
+			prevText : 'Anterior',
+			nextText : 'Próximo',
+			currentText : 'Começo',
+			monthNames : [ 'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio',
+					'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro',
+					'Novembro', 'Dezembro' ],
+			monthNamesShort : [ 'Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun',
+					'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez' ],
+			dayNames : [ 'Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta',
+					'Sexta', 'Sábado' ],
+			dayNamesShort : [ 'Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb' ],
+			dayNamesMin : [ 'D', 'S', 'T', 'Q', 'Q', 'S', 'S' ],
+			weekHeader : 'Semana',
+			firstDay : 1,
+			isRTL : false,
+			showMonthAfterYear : false,
+			yearSuffix : '',
+			timeOnlyTitle : 'Só Horas',
+			timeText : 'Tempo',
+			hourText : 'Hora',
+			minuteText : 'Minuto',
+			secondText : 'Segundo',
+			currentText : 'Data Atual',
+			ampm : false,
+			month : 'Mês',
+			week : 'Semana',
+			day : 'Dia',
+			allDayText : 'Todo Dia'
+		};
+
+		function configurarMoeda() {
+		 $('.moeda').inputmask('currency', {
+		        radixPoint:",", 
+		        groupSeparator: ".", 
+		        autoGroup: true,
+		        prefix: '',
+		        digits: 2
+			});	
+		}
+
+		$(document).ready(function() {
+			configurarMoeda();
+			
+			$(".fone").mask("(99) 999999999");
+			
+			$('.cep').mask('99.999-999');
+		});
+	</script>
+
+</h:body>
+
+</html>

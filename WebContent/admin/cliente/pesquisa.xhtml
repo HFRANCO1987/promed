@@ -1,0 +1,89 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:util="http://xmlns.jcp.org/jsf/composite/util"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+
+	<f:metadata>
+		<f:viewAction action="#{pessoaBean.initClientes}" />
+	</f:metadata>
+
+	<ui:define name="head">
+		<style type="text/css">
+.main-content {
+	padding: 0;
+}
+</style>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form>
+			<div class="ui-g dashboard">
+				<div class="Container100 Responsive50 ">
+					<div class="Row">
+						<div class="Container100">
+							<div class="ContainerIndent">
+								<div class="ShadowBox navyblueback white">
+									<div class="Wid60 DispBlock Fleft">
+										<span class="Fs12 Wid70 DispBlock Fleft ShowOnDesktop">#PROMED
+											- @Promed</span> <a href="#"
+											class="Fs18 Wid70 DispInBlock MarTop5 Fleft white"
+											style="line-height: 18px;"> <i
+											class="fa fa-twitter Fs20 Fleft MarRight10 ShowOnMobile"></i>
+											PROMED! Sua saúde em primeiro lugar!
+										</a>
+									</div>
+									<util:top-links />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+			<p:dataTable var="pessoa"
+				rows="20" paginator="true" id="dtpessoas"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="50,100" 
+				value="#{pessoaBean.listaPessoas}">
+				<f:facet name="header">Listagem de Clientes</f:facet>
+				<p:column headerText="Código" style="width:50px;text-align:center" >
+					<p:outputLabel value="#{pessoa.id}"/>
+				</p:column>
+				<p:column headerText="Nome"  style="width:250px">
+					<p:outputLabel value="#{pessoa.nome}"/><br/>
+					<p:outputLabel value="#{pessoa.email}"/>
+				</p:column>
+				<p:column headerText="Data Nascimento" style="width:80px;text-align:center">
+					<p:outputLabel value="#{pessoa.dataNascimento}">
+						<f:convertDateTime locale="pt" pattern="dd/MM/yyyy"/>
+					</p:outputLabel>
+				</p:column>
+				<p:column headerText="Rua">
+					<p:outputLabel value="#{pessoa.rua}"/>
+				</p:column>
+				<p:column headerText="Bairro">
+					<p:outputLabel value="#{pessoa.bairro}"/>
+				</p:column>
+				<p:column headerText="Cidade">
+					<p:outputLabel value="#{pessoa.cidade}"/>
+				</p:column>
+				<p:column headerText="UF" style="width:30px;text-align:center">
+					<p:outputLabel value="#{pessoa.uf.status}"/>
+				</p:column>
+				<p:column headerText="Telefone">
+					<p:outputLabel value="#{pessoa.telefone}"/>
+				</p:column>
+				<p:column headerText="Senha" style="width:50px;text-align:center">
+					<p:outputLabel value="#{pessoa.senha}"/>
+				</p:column>
+			</p:dataTable>
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

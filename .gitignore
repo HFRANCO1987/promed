@@ -1,0 +1,9 @@
+/target
+/.metadata
+/.settings
+/WebContent/WEB-INF/classes
+/WebContent/resources/ronin-layout/js
+/WebContent/resources/ronin-layout/css
+/WebContent/resources/ronin-layout/fonts
+/WebContent/resources/ronin-layout/images
+/WebContent/WEB-INF/lib/ronin-theme-2.1.jar

@@ -1,0 +1,92 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:util="http://xmlns.jcp.org/jsf/composite/util"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	
+	<f:metadata>
+		<f:viewParam name="dummy" />
+		<f:event listener="#{loginBean.preRender}" type="preRenderView" />
+	</f:metadata>
+	
+	<ui:define name="head">
+		<style type="text/css">
+.main-content {
+	padding: 0;
+}
+</style>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form id="frm" prependId="false">
+			<div class="ui-g dashboard">
+				<div class="Container100 Responsive50 ">
+					<div class="Row">
+						<div class="Container100">
+							<div class="ContainerIndent">
+								<div class="ShadowBox navyblueback white">
+									<div class="Wid60 DispBlock Fleft">
+										<span class="Fs12 Wid70 DispBlock Fleft ShowOnDesktop">#PROMED
+											- @Promed</span> <a href="#"
+											class="Fs18 Wid70 DispInBlock MarTop5 Fleft white"
+											style="line-height: 18px;"> <i
+											class="fa fa-twitter Fs20 Fleft MarRight10 ShowOnMobile"></i>
+											PROMED! Sua saúde em primeiro lugar!
+										</a>
+									</div>
+									<util:top-links/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<p:fieldset>
+				<div class="Wid25 MarAuto DispBlock OvHidden Responsive100">
+					<div class="ContainerIndent">
+						<div class="Wid90 MarAuto">
+							<p:messages autoUpdate="true" />
+							<div
+								class="ShadowBox whiteback TexAlCenter RedBorderedBox BordRad15">
+								<div class="EmptyBox20"></div>
+								<div class="Wid100 OvHidden BigTopic FontDosisSemiBold Fs30">
+									<i class="fa fa-key"></i> Acesso Restrito
+								</div>
+								<div class="EmptyBox20"></div>
+								<div class="Wid100">
+									<p:inputText placeholder="Login" label="Login" id="j_username"
+										value="#{loginBean.email}" required="true"
+										requiredMessage="Login obrigatório"
+										styleClass="Wid80 TexAlCenter Fs18"
+										style="text-transform: lowercase;" />
+								</div>
+								<div class="EmptyBox10"></div>
+								<div class="Wid100">
+									<p:inputText type="password" label="Senha" id="j_password"
+										required="true" requiredMessage="Senha obrigatório"
+										placeholder="Senha" styleClass="Wid80 TexAlCenter Fs18" />
+								</div>
+								<div class="EmptyBox30"></div>
+								<div class="Wid100">
+									<p:commandButton value="Entrar" action="#{loginBean.login}"
+										update="@form" process="@form" ajax="false"
+										icon="fa fa-sign-in Fs18 white" styleClass="Wid60" />
+
+									<p:commandButton value="Cadastra-se" action="/cadastro.xhtml?faces-redirect=true" immediate="true" process="@this"
+										icon="fa fa-user-circle-o Fs18 white" styleClass="GreenButton" />
+								</div>
+								<div class="Wid100"></div>
+								<div class="EmptyBox30"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</p:fieldset>
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

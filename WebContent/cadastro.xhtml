@@ -1,0 +1,139 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:util="http://xmlns.jcp.org/jsf/composite/util"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="head">
+		<style type="text/css">
+.main-content {
+	padding: 0;
+}
+</style>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form>
+			<div class="ui-g dashboard">
+				<div class="Container100 Responsive50 ">
+					<div class="Row">
+						<div class="Container100">
+							<div class="ContainerIndent">
+								<div class="ShadowBox navyblueback white">
+									<div class="Wid60 DispBlock Fleft">
+										<span class="Fs12 Wid70 DispBlock Fleft ShowOnDesktop">#PROMED
+											- @Promed</span> <a href="#"
+											class="Fs18 Wid70 DispInBlock MarTop5 Fleft white"
+											style="line-height: 18px;"> <i
+											class="fa fa-twitter Fs20 Fleft MarRight10 ShowOnMobile"></i>
+											PROMED! Sua saúde em primeiro lugar!
+										</a>
+									</div>
+									<util:top-links />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+			<p:fieldset legend="Faça o seu cadastro!">
+				<p:panel id="pnclientes" header="Cadastro de Clientes"
+					style="margin-bottom:20px">
+					<p:messages autoUpdate="true"  />
+					<div class="Container100 Responsive100">
+						<div class="Row">
+							<div class="Container100 Responsive100">
+								<div class="ContainerIndent">
+									<div class="ShadowBox whiteback RedBorderedBox">
+										<p:panelGrid columns="2">
+											<p:outputLabel for="nome" value="Nome: " />
+											<p:inputText id="nome" required="true"
+												requiredMessage="Nome é um campo obrigatório!"
+												value="#{pessoaBean.pessoa.nome}" size="50" />
+
+											<p:outputLabel for="email" value="Email: " />
+											<p:inputText id="email" required="true"
+												requiredMessage="Email é um campo obrigatório!"
+												value="#{pessoaBean.pessoa.email}" size="50" />
+
+											<p:outputLabel for="cpf" value="CPF: " />
+											<p:inputText id="cpf" required="true"
+												requiredMessage="CPF é um campo obrigatório!"
+												value="#{pessoaBean.pessoa.cpf}" size="20" />
+
+											<p:outputLabel for="rg" value="RG: " />
+											<p:inputText id="rg" value="#{pessoaBean.pessoa.rg}"
+												size="20" />
+
+											<p:outputLabel for="datanascimento"
+												value="Data de Nascimento: " />
+											<p:calendar id="datanascimento" required="true" locale="pt"
+												pattern="dd/MM/yyyy"
+												requiredMessage="Data Nascimento é um campo obrigatório!"
+												value="#{pessoaBean.pessoa.dataNascimento}" />
+
+											<p:outputLabel for="rua" value="Rua: " />
+											<p:inputText id="rua" required="true"
+												requiredMessage="Rua é um campo obrigatório!"
+												value="#{pessoaBean.pessoa.rua}" size="50" />
+
+											<p:outputLabel for="bairro" value="Bairro: " />
+											<p:inputText id="bairro" required="true"
+												requiredMessage="Bairro é um campo obrigatório!"
+												value="#{pessoaBean.pessoa.bairro}" size="50" />
+
+											<p:outputLabel for="cidade" value="Cidade: " />
+											<p:inputText id="cidade" required="true"
+												requiredMessage="Cidade é um campo obrigatório!"
+												value="#{pessoaBean.pessoa.cidade}" size="50" />
+
+											<p:outputLabel for="uf" value="UF: " />
+											<p:selectOneMenu id="uf" required="true"
+												requiredMessage="UF é um campo obrigatório!"
+												value="#{pessoaBean.pessoa.uf}">
+												<f:selectItem itemLabel="" itemValue="" />
+												<f:selectItems var="uf" itemValue="#{uf}"
+													itemLabel="#{uf.status}" value="#{pessoaBean.enumUf}" />
+											</p:selectOneMenu>
+
+											<p:outputLabel for="cep" value="CEP: " />
+											<p:inputText id="cep" required="true"
+												requiredMessage="CEP é um campo obrigatório!"
+												value="#{pessoaBean.pessoa.cep}" size="20" />
+
+											<p:outputLabel for="senha" value="Senha: " />
+											<p:inputText id="senha" required="true"
+												requiredMessage="Senha é um campo obrigatório!"
+												value="#{pessoaBean.pessoa.senha}" />
+
+											<p:outputLabel for="telefone" value="Telefone: " />
+											<p:inputText id="telefone"
+												value="#{pessoaBean.pessoa.telefone}" />
+
+											<p:outputLabel for="celular" value="Celular: " />
+											<p:inputText id="celular"
+												value="#{pessoaBean.pessoa.celular}" />
+										</p:panelGrid>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<f:facet name="footer">
+						<p:commandButton value="Gravar" ajax="true" update="@form"
+							action="#{pessoaBean.gravarUsuario}" process="@this @form"
+							styleClass="GreenButton" icon="fa fa-refresh Fs18 white" />
+					</f:facet>
+				</p:panel>
+
+
+			</p:fieldset>
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

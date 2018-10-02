@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:util="http://xmlns.jcp.org/jsf/composite/util"
+	xmlns:composite="http://xmlns.jcp.org/jsf/composite">
+
+<composite:interface>
+</composite:interface>
+
+<composite:implementation>
+		<div class="Wid40 Fright">
+			<p:outputPanel rendered="#{!seguranca.usuarioEstaLogado}">
+				<a href="${facesContext.externalContext.request.contextPath}/login.xhtml"
+					class="Fright white Fs18 DispInlBlock FontDosisRegular HoverEffect TexAlRight"
+					style="padding: 5px 10px;"><i class="fa fa-sign-in Fs20"></i>   Faça seu login</a>
+			</p:outputPanel> 
+				
+			<p:outputPanel rendered="#{seguranca.usuarioEstaLogado}">
+				<a href="${facesContext.externalContext.request.contextPath}/j_spring_security_logout"
+					class="Fright white Fs18 DispInlBlock FontDosisRegular HoverEffect TexAlRight"
+					style="padding: 5px 10px;"><i class="fa fa-sign-out Fs20"></i>   Sair</a>
+			</p:outputPanel>
+			
+			<p:outputPanel rendered="#{!seguranca.usuarioEstaLogado}">
+				<a href="${facesContext.externalContext.request.contextPath}/cadastro.xhtml"
+					class="Fright white Fs18 DispInlBlock FontDosisRegular HoverEffect TexAlRight"
+					style="padding: 5px 10px;"><i class="fa fa-user-circle-o Fs20"></i>   Cadastre-se</a>
+			</p:outputPanel> 
+			
+			<p:outputPanel> 
+				<a href="${facesContext.externalContext.request.contextPath}/index.xhtml"
+					class="Fright white Fs18 DispInlBlock FontDosisRegular HoverEffect TexAlRight"
+					style="padding: 5px 10px;"><i class="fa fa-product-hunt Fs20"></i>   Produtos</a>
+			</p:outputPanel> 
+			
+			<p:outputPanel rendered="#{seguranca.permissaoAdmin}"> 
+				<a href="${facesContext.externalContext.request.contextPath}/admin/index.xhtml"
+					class="Fright white Fs18 DispInlBlock FontDosisRegular HoverEffect TexAlRight"
+					style="padding: 5px 10px;"><i class="fa fa-home Fs20"></i>   Administração</a>
+			</p:outputPanel> 
+				
+		</div>
+</composite:implementation>
+</html>
+

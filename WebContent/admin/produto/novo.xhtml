@@ -1,0 +1,116 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:util="http://xmlns.jcp.org/jsf/composite/util"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<f:metadata>
+		<f:viewAction action="#{produtoBean.initProdutosAdmin}" />
+	</f:metadata>
+
+	<ui:define name="head">
+		<style type="text/css">
+.main-content {
+	padding: 0;
+}
+</style>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form prependId="false">
+			<div class="ui-g dashboard">
+				<div class="Container100 Responsive50 ">
+					<div class="Row">
+						<div class="Container100">
+							<div class="ContainerIndent">
+								<div class="ShadowBox navyblueback white">
+									<div class="Wid60 DispBlock Fleft">
+										<span class="Fs12 Wid70 DispBlock Fleft ShowOnDesktop">#PROMED
+											- @Promed</span> <a href="#"
+											class="Fs18 Wid70 DispInBlock MarTop5 Fleft white"
+											style="line-height: 18px;"> <i
+											class="fa fa-twitter Fs20 Fleft MarRight10 ShowOnMobile"></i>
+											PROMED! Sua saúde em primeiro lugar!
+										</a>
+									</div>
+									<util:top-links />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+			<p:panel id="pnclientes" header="Cadastro de Produtos"
+				style="margin-bottom:20px">
+				<p:messages autoUpdate="true" />
+				<div class="Container100 Responsive100">
+					<div class="Row">
+						<div class="Container100 Responsive100">
+							<div class="ContainerIndent">
+								<div class="ShadowBox whiteback RedBorderedBox">
+									<p:panelGrid columns="2">
+										<p:outputLabel for="nome" value="Nome do Produto: " />
+										<p:inputText id="nome" required="true"
+											requiredMessage="Nome do Produto é um campo obrigatório!"
+											value="#{produtoBean.produto.nome}" size="50" />
+
+										<p:outputLabel for="preco" value="Preço: " />
+										<p:inputText id="preco" required="true"
+											requiredMessage="Preço é um campo obrigatório!"
+											converter="ValorMonetarioConverter" styleClass="moeda"
+											value="#{produtoBean.produto.preco}" size="15" />
+									</p:panelGrid>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<f:facet name="footer">
+					<p:commandButton value="Cadastrar Produto" ajax="true"
+						update="@form" oncomplete="configurarMoeda()"
+						action="#{produtoBean.cadastrarProduto}" process="@this @form"
+						styleClass="GreenButton" icon="fa fa-refresh Fs18 white" />
+				</f:facet>
+			</p:panel>
+			
+			<hr/>
+			
+			<p:dataTable var="produto"
+				rows="20" paginator="true" id="dtprodutos"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="50,100" 
+				value="#{produtoBean.listaProdutosAdmin}">
+				<f:facet name="header">Listagem de Produtos</f:facet>
+				<p:column headerText="Código" style="width:50px;text-align:center">
+					<p:outputLabel value="#{produto.id}"/>
+				</p:column>
+				<p:column headerText="Nome Produto" style="text-align:left">
+					<p:outputLabel value="#{produto.nome}"/>
+				</p:column>
+				<p:column headerText="Preço" style="width:100px;text-align:right">
+					<p:outputLabel value="#{produto.preco}" converter="ValorMonetarioConverter"/>
+				</p:column>
+				<p:column headerText="-" style="width:80px;text-align:center">
+					<p:commandLink process="@this" 
+						ajax="true" global="false" immediate="true" update="nome, preco"> 
+							<f:setPropertyActionListener value="#{produto}" target="#{produtoBean.produto}" />
+							<p:graphicImage value="/img/edit.png" styleClass="imgtable" />
+					</p:commandLink>
+					<p:commandLink action="#{produtoBean.excluir}" process="@this" 
+						ajax="true" global="false" immediate="true" update="dtprodutos"> 
+							<f:setPropertyActionListener value="#{produto}" target="#{produtoBean.produto}" />
+							<p:graphicImage value="/img/delete.png" styleClass="imgtable" />
+					</p:commandLink>
+				</p:column>
+			</p:dataTable>
+
+
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

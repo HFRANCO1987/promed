@@ -1,0 +1,184 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:util="http://xmlns.jcp.org/jsf/composite/util"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<f:metadata>
+		<f:viewAction action="#{produtoBean.initProdutos}" onPostback="true"/>
+	</f:metadata>
+
+	<ui:define name="head">
+		<style type="text/css">
+.main-content {
+	padding: 0;
+}
+</style>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form prependId="false">
+
+			<div class="ui-g dashboard">
+				<div class="Container100 Responsive50 ">
+					<div class="Row">
+						<div class="Container100">
+							<div class="ContainerIndent">
+								<div class="ShadowBox navyblueback white">
+									<div class="Wid60 DispBlock Fleft">
+										<span class="Fs12 Wid70 DispBlock Fleft ShowOnDesktop">PROMED!
+											Sua saúde em primeiro lugar! </span>
+
+										<p:outputPanel rendered="#{seguranca.usuarioEstaLogado}">
+											<a href="#"
+												class="Fs18 Wid70 DispInBlock MarTop5 Fleft white"
+												style="line-height: 18px;"> <i
+												class="fa fa-twitter Fs20 Fleft MarRight10 ShowOnMobile"></i>
+												Seja Bem-Vindo, #{seguranca.nomeUsuario}
+											</a>
+										</p:outputPanel>
+										<p:outputPanel rendered="#{!seguranca.usuarioEstaLogado}">
+											<a href="#"
+												class="Fs18 Wid70 DispInBlock MarTop5 Fleft white"
+												style="line-height: 18px;"> <i
+												class="fa fa-twitter Fs20 Fleft MarRight10 ShowOnMobile"></i>
+												Seja Bem-Vindo a Promed - Loja Virtual, cadastre-se e
+												adquira nossos produtos.
+											</a>
+										</p:outputPanel>
+									</div>
+
+									<util:top-links />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<p:fieldset legend="Adquira o seu produto agora mesmo">
+				<p:messages autoUpdate="true" />
+				<div class="Container100 Responsive100 ">
+					<div class="Row">
+						<div class="Container75 Responsive100">
+							<div class="ContainerIndent">
+								<div class="ShadowBox whiteback RedBorderedBox"
+									style="min-height: 200px">
+									<p:dataGrid var="produto" value="#{produtoBean.listaProdutos}"
+										columns="3" layout="grid" rows="10" paginator="true" id="cars"
+										paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+										rowsPerPageTemplate="5,25,50"
+										emptyMessage="Nenhum produto encontrado!">
+
+										<f:facet name="header">
+									            Nossos Produtos
+								        </f:facet>
+
+										<p:panel header="#{produto.nome}" style="text-align:center">
+											<h:panelGrid columns="1" style="width:100%">
+												<p:graphicImage width="150" name="images/produto.png"
+													library="ronin-layout" />
+
+												<p:outputLabel value="#{produto.nome}" />
+												<p:outputLabel value="#{produto.preco}">
+													<f:converter converterId="ValorMonetarioConverter"></f:converter>
+												</p:outputLabel>
+
+												<p:commandButton value="Adicionar ao Carrinho"
+													rendered="#{seguranca.autenticadoEhCliente}"
+													action="#{carrinhoBean.adicionarProdutoCarrinho}"
+													process="@this" update="dtCarrinho, lblTotal" ajax="true">
+													<f:setPropertyActionListener value="#{produto}"
+														target="#{carrinhoBean.produto}"></f:setPropertyActionListener>
+												</p:commandButton>
+											</h:panelGrid>
+										</p:panel>
+									</p:dataGrid>
+									<div class="EmptyBox20"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="Container25 Responsive100 ">
+						<div class="ContainerIndent ">
+							<div class="ShadowBox whiteback NavyBlueBorderedBox"
+								style="min-height: 160px">
+								<div class="Container100">
+									<div class="ContainerIndent">
+										<h2 class="Fs26 navyblue DispInlBlock FontDosisRegular Fleft"
+											style="line-height: 26px;">Meu Carrinho</h2>
+										<i class="fa fa-cart-arrow-down Fright navyblue Fs30"></i>
+									</div>
+								</div>
+								<div class="Container100 Responsive100">
+									<div class="ContainerIndent">
+										<div class="EmptyBox10"></div>
+										<p:dataTable value="#{carrinhoBean.listaProdutosCarrinho}"
+											id="dtCarrinho" var="produto" editable="true" editMode="cell"
+											rowIndexVar="rowIx" paginatorPosition="bottom" rows="5"
+											paginator="true"
+											paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+											rowsPerPageTemplate="10,20,30" rowKey="#{produto.id}"
+											emptyMessage="Carrinho vázio!" style="text-align:center">
+											<p:ajax event="cellEdit"
+												listener="#{carrinhoBean.onCellEdit}" process="@this"
+												immediate="true" update="lblTotal" />
+
+											<p:column headerText="Nome" style="width:80px">
+												<p:outputLabel value="#{produto.nome}" />
+											</p:column>
+											<p:column headerText="Qnt" style="text-align:center">
+												<p:cellEditor>
+													<f:facet name="output">
+														<h:outputText value="#{produto.qnt}" />
+													</f:facet>
+													<f:facet name="input">
+														<p:inputText style="text-align:center"
+															onkeypress="return somenteNumero(event)" size="3"
+															id="modelInput" value="#{produto.qnt}" />
+													</f:facet>
+												</p:cellEditor>
+											</p:column>
+											<p:column headerText="Preço R$" style="text-align:right">
+												<p:outputLabel value="#{produto.preco}">
+													<f:converter converterId="ValorMonetarioConverter" />
+												</p:outputLabel>
+											</p:column>
+										</p:dataTable>
+										<p:panelGrid columns="1" layout="grid"
+											style="text-align:center">
+											<p:outputLabel id="lblInfo" value="Total do Carrinho R$:"
+												style="font-weight:bold !important; size:16px"></p:outputLabel>
+											<p:outputLabel id="lblTotal"
+												value="#{carrinhoBean.calcularTotalCarrinho}"
+												converter="ValorMonetarioConverter" />
+											<p:outputLabel id="lblFormaPagamento"
+												value="Forma de Pagamento:"
+												style="font-weight:bold !important; size:16px"></p:outputLabel>
+											<p:selectOneRadio id="formapagamento" required="true"
+												rendered="#{seguranca.autenticadoEhCliente}"
+												requiredMessage="Forma de Pagamento é um campo obrigatório!"
+												value="#{carrinhoBean.formaPagamento}">
+												<f:selectItems var="fp" itemValue="#{fp}"
+													itemLabel="#{fp.descricao}"
+													value="#{carrinhoBean.enumFormaPagamento}" />
+											</p:selectOneRadio>
+											<p:commandButton value="Finalizar compra?"
+												action="#{carrinhoBean.finalizaCompra}" ajax="true"
+												process="@this, formapagamento" update="dtCarrinho"
+												rendered="#{seguranca.autenticadoEhCliente}"></p:commandButton>
+										</p:panelGrid>
+									</div>
+								</div>
+								<div class="EmptyBox20"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</p:fieldset>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

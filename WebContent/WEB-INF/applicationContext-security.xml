@@ -1,0 +1,66 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+  xmlns:beans="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+           http://www.springframework.org/schema/security
+           http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+    
+    <!-- NÃO É NECESSÁRIO NENHUM TIPO DE AUTENTICAÇÃO -->
+    <http pattern="/javax.xhtml.resource/**" security="none" />
+    <http pattern="/assets/**" security="none" />
+    <http pattern="/img/**" security="none" />
+    <http pattern="/login.xhtml" security="none" />
+    <http pattern="/cadastro.xhtml" security="none" />
+   
+	<!--  
+		Estratégia de autenticação e redirecionamento
+		https://github.com/eugenp/tutorials/blob/master/spring-security-mvc-persisted-remember-me/src/main/java/org/baeldung/security/MySimpleUrlAuthenticationSuccessHandler.java  
+	-->
+	<beans:bean id="sucessHandler"
+        class="promed.seguranca.RedirecionaPaginaPadrao" />
+    
+	<http auto-config="true" use-expressions="true">
+
+		<!-- SOMENTE USUARIO COM PERFIL ADMIN -->	
+		<intercept-url pattern="/admin/**" access="hasAnyRole('ADMIN')" />	
+		
+		<!-- FORMULARIO DE LOGIN 
+		login-page: Página de Login
+		username-parameter: campo da tela de login com id j_username
+		password-parameter: campo da tela de login com id j_password
+		login-processing-url: action que será executada para realizar a verificação do usuário
+		authentication-success-handler-ref: Utiliza o bean myAutenticacaoSucesso para redirecionar de acordo com a condição 
+		authentication-failure-url: Em caso de falha redireciona
+		default-target-url: Define a url padrão para interceptação
+		always-use-default-target: Habilita e defina como default
+		-->
+		<form-login 
+			login-page="/login.xhtml" 
+			username-parameter="j_username" 
+			password-parameter="j_password" 
+			login-processing-url="/j_spring_security_check"
+			authentication-success-handler-ref="sucessHandler"
+			authentication-failure-url="/login.xhtml?invalid=true"
+			default-target-url="/admin" 
+			always-use-default-target="true" />
+
+		<!-- logou-url: Utiliza o action para fazer logout (sair)
+		invalidate-session: Inválida/mata sessão do usuário logado
+		logout-success-url: Após logout redireciona para a página especificada
+		  -->
+		<logout logout-url="/j_spring_security_logout"
+			invalidate-session="true" logout-success-url="/index.xhtml"/>
+	</http>
+	
+	<!-- Bean utilizado para realizar autenticação, substitui o modelo mais utilizado com jdbc padrão, 
+	com isso é utilizado uma query jpa em vez de usar um jdc-user-service, no final é a mesma coisa.
+	 -->
+	<beans:bean id="dataSourceUsuario" class="promed.seguranca.DataSourceUsuario" />
+	
+	<authentication-manager>
+		<!--  Referncia ao bean customUserDetailService. Autenticação será baseada nesse provider, de acordo com seu resultado -->
+		<authentication-provider user-service-ref="dataSourceUsuario"/>
+	</authentication-manager>
+           
+</beans:beans>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+                                         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory name="promedSessionFactory">
+		<property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+		<property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/promed</property>
+		<property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+		<property name="hibernate.connection.username">postgres</property>
+		<property name="hibernate.connection.password">123456</property>
+		
+		<property name="hibernate.show_sql">false</property>
+		<property name="hibernate.format_sql">false</property>
+		<property name="hibernate.connectandersion.charSet">utf-8</property>
+		
+		<!-- configuration pool via c3p0 -->
+		<property name="hibernate.c3p0.min_size">1</property>
+		<property name="hibernate.c3p0.max_size">10</property>
+		<property name="hibernate.c3p0.timeout">100</property>
+		<property name="hibernate.c3p0.max_statements">50</property> <!-- segundos -->
+		<property name="hibernate.c3p0.idle_test_period">100</property> <!-- segundos -->
+
+		<mapping class="promed.entidade.Grupo" />
+		<mapping class="promed.entidade.Pedido" />
+		<mapping class="promed.entidade.Pessoa" />
+		<mapping class="promed.entidade.Produto" />
+		<mapping class="promed.entidade.Usuario" />
+	</session-factory>
+</hibernate-configuration>

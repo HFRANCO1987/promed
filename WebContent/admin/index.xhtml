@@ -1,0 +1,87 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:util="http://xmlns.jcp.org/jsf/composite/util"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="head">
+		<style type="text/css">
+.main-content {
+	padding: 0;
+}
+</style>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form>
+
+
+			<div class="ui-g dashboard">
+				<div class="Container100 Responsive50 ">
+					<div class="Row">
+						<div class="Container100">
+							<div class="ContainerIndent">
+								<div class="ShadowBox navyblueback white">
+									<div class="Wid60 DispBlock Fleft">
+										<span class="Fs12 Wid70 DispBlock Fleft ShowOnDesktop">PROMED!
+											Sua saúde em primeiro lugar! </span> <a href="#"
+											class="Fs18 Wid70 DispInBlock MarTop5 Fleft white"
+											style="line-height: 18px;"> <i
+											class="fa fa-twitter Fs20 Fleft MarRight10 ShowOnMobile"></i>
+											Seja Bem-Vindo, #{seguranca.nomeUsuario}
+										</a>
+									</div>
+
+									<util:top-links />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<p:fieldset legend="Acesso Rápido">
+				<p:outputPanel autoUpdate="true">
+					<div class="Container100 Responsive50 ">
+						<div class="Row">
+							<div class="Container100 Responsive50">
+								<div class="ContainerIndent">
+									<div class="ShadowBox whiteback RedBorderedBox"
+										style="min-height: 200px">
+										<div class="Container100">
+											<div class="ContainerIndent">
+												<i class="fa fa-user navyblue Fs60 Fleft MarRight10"></i> <span
+													class="DispBlock red Fs26" style="line-height: 60px;">Acesso
+													Rápido (Cadastros) </span>
+											</div>
+										</div>
+										<div class="Container10 Responsive100">
+											<div class="ContainerIndent">
+												<a href="../admin/produto/novo.xhtml"
+													class="ShadowBox HoverEffect blueback white TexAlCenter"><i
+													class="fa fa-product-hunt Fs30 DispBlock"></i><span
+													class="Fs12">Cadastros Produtos</span></a>
+											</div>
+										</div>
+										<div class="Container10 Responsive100">
+											<div class="ContainerIndent">
+												<a href="../admin/cliente/pesquisa.xhtml"
+													class="ShadowBox HoverEffect blueback white TexAlCenter"><i
+													class="fa fa-address-book-o Fs30 DispBlock"></i><span
+													class="Fs12">Listagem de Clientes</span></a>
+											</div>
+										</div>
+										<div class="EmptyBox20"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</p:outputPanel>
+
+			</p:fieldset>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>
