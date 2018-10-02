@@ -4,5 +4,5 @@ Loja virtual com JSF e Hibernate.
 Arquivo de configuração com dados de conexão com o BD.
 # autenticação e autorização
 Ambas são realizadas utilizando spring security, o pacote segurança possui as classes responsáveis por realizar o processo.
-A classe RedirecionaPaginaPadrao.java determina qual página será exibida conforme o perfil do usuário.
+A classe RedirecionaPaginaPadrao.java determina qual página será exibida conforme o grupo (EnumGrupo.java) do usuário.
 
